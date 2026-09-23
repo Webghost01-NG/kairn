@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import crypto from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { evaluateAction } from '../core/policy.js';
+import { enrichDecision } from '../core/reasoning.js';
 
 const port = Number(process.env.PORT || 8787);
 const auditLog = [];
@@ -15,7 +16,7 @@ const server = createServer(async (request, response) => {
     try {
       const body = await readBody(request);
       const action = JSON.parse(body);
-      const result = { id: crypto.randomUUID(), action, ...evaluateAction(action) };
+      const result = { id: crypto.randomUUID(), action, ...await enrichDecision(action, evaluateAction(action)) };
       auditLog.unshift(result);
       return sendJson(response, 200, result);
     } catch (error) {

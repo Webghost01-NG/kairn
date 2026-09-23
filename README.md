@@ -21,6 +21,9 @@ npm start
 
 Open http://localhost:8787. Send a sample action with `POST /api/evaluate`.
 
+To connect a live SERV reasoning endpoint, provide `SERV_REASONING_URL` and
+`SERV_API_KEY`. Without them, Kairn uses its deterministic local policy engine.
+
 ## Roadmap
 
 - Add SERV Reasoning adapter.
