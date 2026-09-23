@@ -1,0 +1,12 @@
+{
+  "name": "kairn",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A safety and policy firewall for autonomous agent actions.",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server/index.js",
+    "start": "node src/server/index.js",
+    "check": "node --check src/server/index.js && node --check src/core/policy.js"
+  }
+}
