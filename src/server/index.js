@@ -1,8 +1,10 @@
 import { createServer } from 'node:http';
+import crypto from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { evaluateAction } from '../core/policy.js';
 
 const port = Number(process.env.PORT || 8787);
+const auditLog = [];
 
 const server = createServer(async (request, response) => {
   if (request.method === 'GET' && request.url === '/') {
@@ -13,10 +15,16 @@ const server = createServer(async (request, response) => {
     try {
       const body = await readBody(request);
       const action = JSON.parse(body);
-      return sendJson(response, 200, { action, ...evaluateAction(action) });
+      const result = { id: crypto.randomUUID(), action, ...evaluateAction(action) };
+      auditLog.unshift(result);
+      return sendJson(response, 200, result);
     } catch (error) {
       return sendJson(response, 400, { error: error.message });
     }
+  }
+
+  if (request.method === 'GET' && request.url === '/api/audit') {
+    return sendJson(response, 200, { records: auditLog });
   }
 
   sendJson(response, 404, { error: 'Not found' });
