@@ -24,6 +24,10 @@ Open http://localhost:8787. Send a sample action with `POST /api/evaluate`.
 To connect a live SERV reasoning endpoint, provide `SERV_REASONING_URL` and
 `SERV_API_KEY`. Without them, Kairn uses its deterministic local policy engine.
 
+## Judging-focused demo
+
+Use `POST /api/intercept` to demonstrate the core wedge: an agent proposes a tool action, Kairn inspects the payment, recipient, and requested data, then either forwards, pauses, or rejects it. Use `POST /api/approval` to resolve a paused action. This directly demonstrates user-readiness and an enterprise revenue path: per-agent policy enforcement and audit API.
+
 ## Roadmap
 
 - Add SERV Reasoning adapter.
