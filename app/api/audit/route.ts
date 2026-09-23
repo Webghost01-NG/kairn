@@ -1,3 +1,4 @@
 import { NextResponse } from 'next/server';
 import { getAuditRecords } from '@/lib/audit';
-export function GET() { return NextResponse.json({ records: getAuditRecords() }); }
+import { requireSecret } from '@/lib/config';
+export async function GET(request: Request) { if (!requireSecret(request)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 }); return NextResponse.json({ records: await getAuditRecords() }); }
