@@ -1,0 +1,4 @@
+'use client';
+import { useState } from 'react';
+const sample = JSON.stringify({ action:'pay_service', amount:85, currency:'USDC', recipient:'0xservice', requestedData:['customer_email_list'], policy:{ maxPayment:10 } }, null, 2);
+export default function Home() { const [input,setInput]=useState(sample); const [result,setResult]=useState('Decision will appear here.'); async function evaluate(){try{const response=await fetch('/api/evaluate',{method:'POST',headers:{'content-type':'application/json'},body:input});setResult(JSON.stringify(await response.json(),null,2));}catch(error){setResult(error instanceof Error?error.message:'Request failed');}} return <main><h1>KAIRN</h1><p>Inspect an agent action before it touches a tool, wallet, or user data.</p><textarea value={input} onChange={(event)=>setInput(event.target.value)}/><br/><button onClick={evaluate}>Evaluate action</button><pre>{result}</pre></main>; }
