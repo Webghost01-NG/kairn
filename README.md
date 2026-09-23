@@ -28,6 +28,12 @@ To connect a live SERV reasoning endpoint, provide `SERV_REASONING_URL` and
 
 Use `POST /api/intercept` to demonstrate the core wedge: an agent proposes a tool action, Kairn inspects the payment, recipient, and requested data, then either forwards, pauses, or rejects it. Use `POST /api/approval` to resolve a paused action. This directly demonstrates user-readiness and an enterprise revenue path: per-agent policy enforcement and audit API.
 
+## Backend environment
+
+Required: `KAIRN_API_SECRET`. Optional: `MCP_TARGET_URL`, `SERV_REASONING_URL`, `SERV_API_KEY`, `KAIRN_MAX_PAYMENT`, and `KAIRN_AUDIT_FILE`.
+
+Health check: `GET /api/health`. Protected routes require the `x-kairn-secret` header. The MCP target is intentionally configured by deployment rather than hardcoded.
+
 ## Roadmap
 
 - Add SERV Reasoning adapter.

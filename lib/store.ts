@@ -6,3 +6,4 @@ async function load() { if (loaded) return; loaded = true; try { const text = aw
 export async function addRecord(record: DecisionRecord) { await load(); memory.unshift(record); await mkdir(dirname(file), { recursive: true }); await appendFile(file, `${JSON.stringify(record)}\n`); return record; }
 export async function records() { await load(); return memory; }
 export async function updateRecord(id: string, status: 'approved' | 'rejected') { await load(); const record = memory.find((item) => item.id === id); if (record) record.status = status; return record; }
+export async function appendEvent(event: unknown) { await mkdir(dirname(file), { recursive: true }); await appendFile(file, `${JSON.stringify({ event, at: new Date().toISOString() })}\n`); }

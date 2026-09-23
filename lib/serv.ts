@@ -1,0 +1,3 @@
+import type { Action } from './policy';
+export async function reasonWithServ(action: Action, local: unknown) { const url = process.env.SERV_REASONING_URL; const key = process.env.SERV_API_KEY; if (!url || !key) return { reasoningSource: 'kairn-policy-engine' }; const response = await fetch(url, { method: 'POST', headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' }, body: JSON.stringify({ task: 'assess_agent_action', action, localDecision: local }) }); if (!response.ok) throw new Error(`SERV reasoning failed: ${response.status}`); return { reasoning: await response.json(), reasoningSource: 'serv-reasoning' };
+}
